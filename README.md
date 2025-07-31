@@ -83,10 +83,10 @@ npm run dev # starts Vite dev server on http://localhost:5173
 ## Usage
 
 1. **Connect Wallet** – Open the DApp, connect MetaMask and switch to the network requested by the *ChainSwitcher* popup.&#x20;
-2. **Buy Primary Tickets** – Visit *Events* page, pick a show and click **Mint**. Hardhat network or Sepolia will prompt for gas.
+2. **Buy Primary Tickets** – Visit *Events* page, pick a show and click **Purchase**. Hardhat network or Sepolia will prompt for gas.
 3. **Resell** – Go to *My Tickets*, choose a ticket in `Active` state, set a price ≤ 130 % face value, and list.&#x20;
-4. **Redeem at Venue** – In `Pending` state press **Redeem** to generate a one-time QR; gate staff scan within 10 min to finalise.&#x20;
-5. **Admin tasks** – Organiser wallet can add validators, withdraw funds, or update base URI.
+4. **Redeem at Venue** – In `Active` state press **Redeem** to generate a one-time QR; gate staff scan within 10 min to finalise.&#x20;
+5. **Admin tasks** – Organiser wallet can add validators, withdraw funds, or update base URI (smart contract only).
 
 ---
 
