@@ -1,5 +1,14 @@
+@media (min-width: 951px) {
+.resale-tickets-grid {
+  display: grid;
+  /* La clave está en esta línea: */
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem; /* Un espaciado entre tarjetas */
+  justify-items: start;
+}
+} 
 /*only for the tickets item resale bc showing only 1 big item it's not practical*/
-@media (max-width: 850px) {
+@media (max-width: 950px) {
 
     /*ticket item resale - mobile version and tablets with less px*/
 

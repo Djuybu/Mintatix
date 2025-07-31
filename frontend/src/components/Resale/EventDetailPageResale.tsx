@@ -149,6 +149,8 @@ const EventDetailPageResale = () => {
 
     const [currentTime, setCurrentTime] = useState<number>(Math.floor(Date.now() / 1000));
 
+     const [buyingTicketId, setBuyingTicketId] = useState<bigint | null>(null);
+
 
     /**** useEffect ****/
 
@@ -219,6 +221,12 @@ const EventDetailPageResale = () => {
             refetchPurchased();
         }
     }, [isMintingSuccess, refetchPurchased]);
+
+    useEffect(() => {
+        if (!isMintingPending) {
+            setBuyingTicketId(null);
+        }
+    }, [isMintingPending]);
 
 
     const ticketsData = useMemo<TicketData[]>(() => {
@@ -337,8 +345,9 @@ const EventDetailPageResale = () => {
                             key={ticketData.id.toString()}
                             ticketData={ticketData}
                             remainingAllowancePerUser={remainingAllowancePerUser}
-                            isBuying={isMintingPending}
+                            isBuying={isMintingPending && buyingTicketId === ticketData.id}
                             onBuy={(tokenId, salePrice) => { //when user clicks the button of the ticketItemResale, the writeContract will be executed with the tokenId and the salePrice of the ticket
+                                setBuyingTicketId(tokenId);
                                 writeContract({
                                     address: eventAddress as `0x${string}`,
                                     abi: eventLogicContract.abi,

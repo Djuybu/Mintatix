@@ -8,7 +8,7 @@ const AccountHeader = ({address, onClick}: {address: string, onClick: () => void
     const shortenedAddress = (addr: string) => addr.substring(1, 6) + '...' + addr.substring(39, 43);
 
     //fetch the balance with wagmi , and if it's loading to show smthg meanwhile 
-    const { data: balanceData, isLoading} = useBalance({address: account.address}) //useBalance reftech automatically the balance when the user sends a tx with another wagmi hook
+    const { data: balanceData, isLoading} = useBalance({address: account.address,query: { refetchInterval: 12000 }, }) //useBalance reftech automatically the balance when the user sends a tx with another wagmi hook
 
     const getBalance = () => {
         if (isLoading) return 'Loading...'; //if the balance is loading, show this message
