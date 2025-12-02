@@ -281,49 +281,94 @@ const TicketDetailModal = ({ isOpen, onClose, onStatusChange, selectedTicket }: 
 
 
 
-    const handlePriceChange = () => {
-        if (isPendingPriceChange || isLoadingPriceChange || isProcessingPriceChange || isRedeeming || isCountingDown || !newSalePriceInput || isLoadingTicketPrice || ticketPriceWei === undefined) return;
-        try {
-            const normalized = newSalePriceInput.replace(',', '.');
-            const newPriceWei = parseUnits(normalized, 18);
-            const maxPriceWei = (ticketPriceWei * 130n) / 100n;
-            if (newPriceWei <= 0n) { alert('Price must be positive.'); return; }
-            if (newPriceWei > maxPriceWei) { alert(`Price cannot exceed ${formatUnits(maxPriceWei, 18)} ETH (130% of original price).`); return; }
-            setIsProcessingPriceChange(true);
-            priceChangeWrite(
-                {
-                    address: selectedTicket.eventAddress,
-                    abi: eventLogicContract.abi,
-                    functionName: 'addTicketsForSale',
-                    args: [selectedTicket.tokenID, newPriceWei]
-                },
-                {
-                    onSuccess: () => console.log("Price change tx submitted."),
-                    onError: (error) => { alert(`Failed to list ticket: ${error.message}`); setIsProcessingPriceChange(false); }
-                }
-            );
-        } catch (e: any) {
-            alert('Invalid price format. Please enter a number (e.g., 0.1).');
-            setIsProcessingPriceChange(false);
+const handlePriceChange = () => {
+    if (
+        isPendingPriceChange ||
+        isLoadingPriceChange ||
+        isProcessingPriceChange ||
+        isRedeeming ||
+        isCountingDown ||
+        !newSalePriceInput ||
+        isLoadingTicketPrice ||
+        ticketPriceWei === undefined
+    ) return;
+
+    // ⚠️ Nếu ticket đang OnSale rồi thì contract hiện tại KHÔNG hỗ trợ update giá,
+    // vì owner của token lúc này là contract, không phải user nữa → listTicket sẽ revert.
+    if (isOnSaleByUser) {
+        alert('Hiện tại chưa hỗ trợ cập nhật giá trực tiếp. Vui lòng Cancel Sale rồi list lại với giá mới.');
+        return;
+    }
+
+    try {
+        const normalized = newSalePriceInput.replace(',', '.');
+        const newPriceWei = parseUnits(normalized, 18);
+        const maxPriceWei = (ticketPriceWei * 130n) / 100n;
+
+        if (newPriceWei <= 0n) {
+            alert('Price must be positive.');
+            return;
         }
-    };
+        if (newPriceWei > maxPriceWei) {
+            alert(`Price cannot exceed ${formatUnits(maxPriceWei, 18)} ETH (130% of original price).`);
+            return;
+        }
 
-    const handleCancelSale = () => {
-        if (isPendingCancelSale || isLoadingCancelSaleSuccess || isCancellingSale || !isOnSaleByUser || isRedeeming || isCountingDown) return;
+        setIsProcessingPriceChange(true);
 
-        setIsCancellingSale(true);
-        cancelSaleWrite(
+        const tokenIdBN = BigInt(selectedTicket.tokenID);
+
+        priceChangeWrite(
             {
                 address: selectedTicket.eventAddress,
                 abi: eventLogicContract.abi,
-                functionName: 'cancelTicketForSale',
-                args: [selectedTicket.tokenID]
+                functionName: 'listTicket',          // 👈 GỌI listTicket THAY VÌ addTicketsForSale
+                args: [tokenIdBN, newPriceWei],      // 👈 uint256 tokenID, uint256 price
             },
             {
-                onError: (error) => { alert(`Failed to cancel sale: ${error.message}`); setIsCancellingSale(false); }
+                onSuccess: () => console.log("List ticket tx submitted."),
+                onError: (error) => {
+                    alert(`Failed to list ticket: ${error.message}`);
+                    setIsProcessingPriceChange(false);
+                }
             }
         );
-    };
+    } catch (e: any) {
+        alert('Invalid price format. Please enter a number (e.g., 0.1).');
+        setIsProcessingPriceChange(false);
+    }
+};
+
+
+
+    const handleCancelSale = () => {
+    if (
+        isPendingCancelSale ||
+        isLoadingCancelSaleSuccess ||
+        isCancellingSale ||
+        !isOnSaleByUser ||
+        isRedeeming ||
+        isCountingDown
+    ) return;
+
+    setIsCancellingSale(true);
+
+    cancelSaleWrite(
+        {
+            address: selectedTicket.eventAddress,
+            abi: eventLogicContract.abi,
+            functionName: 'unlistTicket', // 👈 ĐÚNG TÊN HÀM TRONG CONTRACT
+            args: [selectedTicket.tokenID],
+        },
+        {
+            onError: (error) => {
+                alert(`Failed to cancel sale: ${error.message}`);
+                setIsCancellingSale(false);
+            }
+        }
+    );
+};
+
 
     const qrValue = useMemo(() => ( //crete the JSON that the qr wil show
         isCountingDown && secretNonce

@@ -1,6 +1,6 @@
 import { useAccount, useConnect, useReconnect } from 'wagmi'
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
 import { hardhat } from 'wagmi/chains'; //we have to import hardhat to use this chain with the dapp
 //custom hooks
 import AccountHeader from './components/AccountHeader'
@@ -15,6 +15,10 @@ import MyTickets from './components/MyTickets/MyTickets.tsx';
 
 import EventGridResales from './components/Resale/EventGridResales.tsx';
 import EventDetailPageResale from './components/Resale/EventDetailPageResale.tsx';
+import NewEventPage from "./components/Events/NewEventPage";
+
+import SignUpPage from './components/SignUp';
+import OrganizerPage from './components/OrganizerPage';
 
 function App() {
 
@@ -58,72 +62,89 @@ function App() {
     );
   }
 
-  return ( //mian layout of the app
-    <BrowserRouter basename='/'>
-      <div className={`main-layout ${account.isConnected && account.chainId === hardhat.id ? 'menu-visible' : ''}`}> {/*in css, we have 3 media querys to display the content with differents margins for mobile, tablet or desktop*/}
+  return (
+  <BrowserRouter basename='/'>
+    <div className={`main-layout ${account.isConnected && account.chainId === hardhat.id ? 'menu-visible' : ''}`}>
+      <div className="content">
+        {account.isConnected && account.address && account.chainId === hardhat.id ? (
+          <>
+            <Disconnect isOpen={isDisconnectOpen} onClose={closeDisconnect} />
+            <Menu />
+            <AccountHeader address={JSON.stringify(account.address)} onClick={openDisconnect} />
+            <ChainSwitcher targetChainId={hardhat.id} />
 
-        <div className="content"> {/*the main content of the dapp */}
-          {/*we use && to evaluate if a component should be rendered or not */}
-          {account.isConnected && account.address && account.chainId === hardhat.id ? ( //case 2: the user is connected and is in the right chain
-            <>
-              <Disconnect isOpen={isDisconnectOpen} onClose={closeDisconnect} />
-              <Menu />
-              <AccountHeader address={JSON.stringify(account.address)} onClick={openDisconnect} />
-              <ChainSwitcher targetChainId={hardhat.id} />
-              <Routes>
-                <Route path="/" element={<Navigate to="/events" replace />} /> {/* the default */}
-                <Route path="/events" element={<EventGrid />} />
-                <Route path="/resales" element={<EventGridResales/>} />
-                <Route path="/myTickets" element={<MyTickets />} />
-                <Route path="/event/:eventAddress" element={<EventDetailPage />} />
-                <Route path="/eventResale/:eventAddress" element={<EventDetailPageResale/>} />
-              </Routes>
-            </>
-          ) : ( //case 3: the user is not connected (the user cant be not connected and the worng chain at the same time) --> offer the user the option to connect the wallet 
-          
-            <div className="page-container" style={{ textAlign: 'center' }}>
-              <h1>Welcome to Mintatix!</h1>
-              <div className="spacer" />
-              <p>Please, connect your wallet to start using the Dapp.</p>
+            <Routes>
+              <Route path="/" element={<Navigate to="/events" replace />} />
+              <Route path="/events" element={<EventGrid />} />
+              <Route path="/resales" element={<EventGridResales />} />
+              <Route path="/myTickets" element={<MyTickets />} />
+              <Route path="/event/:eventAddress" element={<EventDetailPage />} />
+              <Route path="/eventResale/:eventAddress" element={<EventDetailPageResale />} />
+              <Route path="/events/new" element={<NewEventPage />} />
+              <Route path='/organizer' element={<OrganizerPage />} />
+            </Routes>
+          </>
+        ) : (
+          // NHÁNH CHƯA CONNECT: có route /signup
+          <Routes>
+            {/* Trang Sign Up */}
+            <Route path="/signup" element={<SignUpPage />} />
 
-              {/* Botones de conexión */}
-              <div className="buttons-container">
-                {metamaskConnector && (
-                  <button className="button" onClick={() => connect({ connector: metamaskConnector })}>
-                    Connect with MetaMask
-                  </button>
-                )}
-                {coinbaseConnector && (
-                  <button className="button" onClick={() => connect({ connector: coinbaseConnector })}>
-                     Connect with Coinbase
-                  </button>
-                )}
-                {walletConnectConnector && (
-                  <button className="button" onClick={() => connect({ connector: walletConnectConnector })}>
-                     Connect with WalletConnect
-                  </button>
-                )}
-                {injectedConnector && (
-                  <button className="button" onClick={() => connect({ connector: injectedConnector })}>
-                    Autoconnect
-                  </button>
-                )}
-              </div>
+            {/* Mặc định: màn hình welcome + nút connect + link sang signup */}
+            <Route
+              path="*"
+              element={
+                <div className="page-container" style={{ textAlign: 'center' }}>
+                  <h1>Welcome to Mintatix!</h1>
+                  <div className="spacer" />
+                  <p>Please, connect your wallet to start using the Dapp.</p>
 
-              {/* if smthg fails it's needed to show the user the specific error*/}
-              {error && !error.message.includes('User rejected the request') && ( // onlly want to show the error if is smthg unusal, not the user rejecting the request
-                <div className="message error-message">
-                  {error.message}
+                  <div className="buttons-container">
+                    {metamaskConnector && (
+                      <button className="button" onClick={() => connect({ connector: metamaskConnector })}>
+                        Connect with MetaMask
+                      </button>
+                    )}
+                    {coinbaseConnector && (
+                      <button className="button" onClick={() => connect({ connector: coinbaseConnector })}>
+                        Connect with Coinbase
+                      </button>
+                    )}
+                    {walletConnectConnector && (
+                      <button className="button" onClick={() => connect({ connector: walletConnectConnector })}>
+                        Connect with WalletConnect
+                      </button>
+                    )}
+                    {injectedConnector && (
+                      <button className="button" onClick={() => connect({ connector: injectedConnector })}>
+                        Autoconnect
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Link sang trang tạo tài khoản + ví mới */}
+                  <p style={{ marginTop: '1.5rem', fontSize: '0.9rem' }}>
+                    New here?{" "}
+                    <Link to="/signup" style={{ textDecoration: 'underline' }}>
+                      Create an account & wallet
+                    </Link>
+                  </p>
+
+                  {error && !error.message.includes('User rejected the request') && (
+                    <div className="message error-message">
+                      {error.message}
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          )}
-        </div>
-
-   
+              }
+            />
+          </Routes>
+        )}
       </div>
-    </BrowserRouter>
-  );
+    </div>
+  </BrowserRouter>
+);
+
 }
 
 export default App;

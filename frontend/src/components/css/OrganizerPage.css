@@ -1,0 +1,70 @@
+.organizer-page {
+  padding: 24px;
+}
+
+.organizer-title {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.organizer-subtitle {
+  margin-bottom: 16px;
+  opacity: 0.8;
+}
+
+.organizer-warning {
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: #ffefef;
+  color: #b00020;
+  margin-bottom: 20px;
+}
+
+.organizer-section {
+  margin-top: 24px;
+  padding: 16px;
+  border-radius: 12px;
+  background: #151515;
+  border: 1px solid #333;
+}
+
+.organizer-form,
+.organizer-check {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.organizer-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.organizer-input,
+.organizer-select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #111;
+  color: #fff;
+}
+
+.organizer-button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.organizer-success {
+  margin-top: 8px;
+  color: #4caf50;
+}
+
+.organizer-status,
+.organizer-info {
+  margin-top: 8px;
+}

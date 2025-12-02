@@ -1,0 +1,223 @@
+/* NewEvent.css */
+
+/* Wrapper chung cho trang tạo sự kiện */
+.new-event-page {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem 1rem 3rem;
+  color: var(--text-color);
+}
+
+/* Card chính */
+.new-event-card {
+  width: 100%;
+  max-width: 800px;
+  background-color: var(--bg-surface);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.75rem 1.5rem 2rem;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
+}
+
+/* Tiêu đề */
+.new-event-title {
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.new-event-subtitle {
+  font-size: 0.95rem;
+  opacity: 0.8;
+  margin-bottom: 1.5rem;
+}
+
+/* Form layout */
+.new-event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Label + input */
+.new-event-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.new-event-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+/* Input & textarea chung */
+.new-event-input,
+.new-event-textarea {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.18));
+  background-color: rgba(0, 0, 0, 0.15);
+  color: var(--text-color);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.new-event-input::placeholder,
+.new-event-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.new-event-input:focus,
+.new-event-textarea:focus {
+  border-color: rgba(var(--text-color-rgb, 255, 255, 255), 0.7);
+  box-shadow: 0 0 0 1px rgba(var(--text-color-rgb, 255, 255, 255), 0.35);
+  background-color: rgba(0, 0, 0, 0.28);
+}
+
+.new-event-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Hàng 2–3 cột cho desktop: thời gian, giá, số lượng, giới hạn vé */
+.new-event-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+/* Hàng cho date + time (nếu bạn tách) */
+.new-event-row-inline {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+/* Hàng cuối: nút submit + lỗi */
+.new-event-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* Nút submit (có thể dùng chung kiểu với .button cũ) */
+.new-event-submit-btn {
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(
+    135deg,
+    rgba(var(--text-color-rgb, 255, 255, 255), 0.92),
+    rgba(var(--text-color-rgb, 255, 255, 255), 0.7)
+  );
+  color: #000;
+  transition: transform 0.12s ease, box-shadow 0.12s ease,
+    filter 0.12s ease, opacity 0.12s ease;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
+}
+
+.new-event-submit-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.65);
+}
+
+.new-event-submit-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+}
+
+.new-event-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Thông báo lỗi / thành công */
+.new-event-error {
+  align-self: flex-start;
+  font-size: 0.85rem;
+  color: #ff6b81;
+}
+
+.new-event-success {
+  align-self: flex-start;
+  font-size: 0.85rem;
+  color: #4cd964;
+}
+
+/* Badge nhỏ gợi ý (ví dụ cho giới hạn số vé, thời gian,...) */
+.new-event-hint {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Tablet trở lên */
+@media (min-width: 768px) {
+  .new-event-card {
+    padding: 2rem 2.25rem 2.25rem;
+  }
+
+  .new-event-title {
+    font-size: 1.9rem;
+  }
+
+  .new-event-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* Ví dụ: nếu bạn dùng .new-event-field trong grid này
+     cho "Giá vé", "Số lượng vé", "Giới hạn vé" thì sẽ đẹp */
+  .new-event-row-inline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .new-event-actions {
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
+
+/* Desktop rộng */
+@media (min-width: 1024px) {
+  .new-event-page {
+    padding: 2.5rem 2rem 3.5rem;
+  }
+
+  .new-event-card {
+    border-radius: 18px;
+  }
+}
+
+/* Mobile nhỏ hơn 400px */
+@media (max-width: 400px) {
+  .new-event-card {
+    padding: 1.25rem 1rem 1.75rem;
+  }
+
+  .new-event-title {
+    font-size: 1.45rem;
+  }
+
+  .new-event-input,
+  .new-event-textarea {
+    font-size: 0.85rem;
+    padding: 0.65rem 0.8rem;
+  }
+}

@@ -16,6 +16,13 @@ try {
 module.exports = {
   solidity: "0.8.28",
   defaultNetwork: "localhost",
+  settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200,   // nếu vẫn to quá thì giảm xuống còn 50–100
+      },
+      viaIR: true
+  },
   networks: {
   ...(INFURA_API_KEY && SEPOLIA_PRIVATE_KEY ? {
           sepolia: {

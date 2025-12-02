@@ -17,3 +17,212 @@
         padding: 0;
     }
 }
+
+.admin-events-section {
+  margin: 2rem 0 2.5rem;
+  padding: 1.5rem 1.8rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+}
+
+.admin-events-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text-color-light);
+}
+
+.admin-events-empty {
+  margin: 0.5rem 0 0;
+  color: var(--text-color);
+  opacity: 0.9;
+}
+
+.admin-events-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.admin-events-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.admin-events-table thead {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.admin-events-table th,
+.admin-events-table td {
+  padding: 0.7rem 0.9rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.admin-events-table th {
+  font-weight: 600;
+  color: var(--text-color-light);
+  white-space: nowrap;
+}
+
+.admin-events-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* badges */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.badge-active {
+  background: rgba(144, 238, 144, 0.15);
+  color: var(--success-color);
+  border: 1px solid rgba(144, 238, 144, 0.3);
+}
+
+.badge-cancelled {
+  background: rgba(255, 107, 107, 0.15);
+  color: var(--error-color);
+  border: 1px solid rgba(255, 107, 107, 0.4);
+}
+
+/* button cancel event */
+.admin-cancel-button {
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 0.4rem 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background: linear-gradient(90deg, var(--error-color) 0%, #ff6b6b 100%);
+  box-shadow: 0 3px 8px rgba(255, 107, 107, 0.3);
+  white-space: nowrap;
+}
+
+.admin-cancel-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.5);
+}
+
+.admin-cancel-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* --- Admin page layout --- */
+.admin-page {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* --- Transaction table --- */
+.event-grid-transactions {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+  padding: 0.5rem;
+  background: rgba(10, 10, 10, 0.8);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.tx-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.tx-table thead {
+  background: linear-gradient(90deg, #20252f, #151922);
+}
+
+.tx-table th,
+.tx-table td {
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid #333;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.tx-table th {
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.tx-table tr:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Monospace địa chỉ cho dễ đọc */
+.addr-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 0.8rem;
+}
+
+/* Badge loại mua */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-primary {
+  background: rgba(46, 204, 113, 0.15);
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.5);
+}
+
+.badge-resale {
+  background: rgba(52, 152, 219, 0.15);
+  color: #3498db;
+  border: 1px solid rgba(52, 152, 219, 0.5);
+}
+
+/* Số lượng vé */
+.tx-qty {
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Message chung */
+.message.error-message {
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.08);
+  border: 1px solid rgba(255, 107, 107, 0.4);
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  margin: 0.5rem 0 1rem;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tx-table th,
+  .tx-table td {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .section-title {
+    font-size: 1.2rem;
+  }
+}

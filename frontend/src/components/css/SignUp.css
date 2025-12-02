@@ -1,0 +1,223 @@
+/****** Sign Up Page ******/
+
+/* wrapper trong khu vực .content, không chạm vào side-menu */
+.signup-page {
+  min-height: calc(100vh - 2rem);
+  padding: 2rem 1.5rem 5rem; /* chừa 5rem để mobile menu không che mất form */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* thẻ card chính */
+.signup-card {
+  width: 100%;
+  max-width: 480px;
+  background-color: var(--bg-surface);
+  color: var(--text-color);
+  border-radius: 16px;
+  padding: 1.75rem 1.75rem 2rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+/****** Typography ******/
+
+.signup-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+
+.signup-subtitle {
+  margin: 0 0 1.75rem;
+  font-size: 0.9rem;
+  color: rgba(var(--text-color-rgb), 0.7);
+}
+
+/****** Form ******/
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.signup-label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+}
+
+.signup-input {
+  margin-top: 0.4rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background-color: rgba(var(--bg-surface-rgb, 15, 23, 42), 0.9);
+  color: var(--text-color);
+  outline: none;
+  font-size: 0.9rem;
+}
+
+.signup-input::placeholder {
+  color: rgba(var(--text-color-rgb), 0.45);
+}
+
+.signup-input:focus {
+  border-color: rgba(var(--text-color-rgb), 0.7);
+  box-shadow: 0 0 0 1px rgba(var(--text-color-rgb), 0.35);
+}
+
+/****** Error ******/
+
+.signup-error {
+  color: #fca5a5;
+  font-size: 0.8rem;
+  margin: 0.25rem 0 0;
+}
+
+/****** Button ******/
+
+.signup-button {
+  margin-top: 0.75rem;
+  padding: 0.6rem 0;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--bg-surface);
+  /* dùng text-color làm màu chính để đồng bộ */
+  background: linear-gradient(
+    135deg,
+    rgba(var(--text-color-rgb), 0.95),
+    rgba(var(--text-color-rgb), 0.8)
+  );
+  transition: transform 0.08s ease, box-shadow 0.08s ease, opacity 0.08s ease;
+}
+
+.signup-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+  box-shadow: none;
+}
+
+.signup-button:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+/****** Wallet Info ******/
+
+.wallet-info {
+  margin-top: 1.8rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(var(--text-color-rgb), 0.2);
+}
+
+.wallet-info h2 {
+  font-size: 1.1rem;
+  margin: 0 0 0.4rem;
+}
+
+.wallet-warning {
+  font-size: 0.8rem;
+  color: #fbbf24;
+  margin: 0 0 1rem;
+}
+
+/* layout 3 cột: label | value | button */
+.wallet-row {
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.wallet-label {
+  font-size: 0.8rem;
+  color: rgba(var(--text-color-rgb), 0.7);
+}
+
+.wallet-value {
+  font-size: 0.8rem;
+  word-break: break-all;
+  background-color: rgba(var(--bg-surface-rgb, 15, 23, 42), 0.9);
+  padding: 0.45rem 0.55rem;
+  border-radius: 8px;
+  border: 1px solid rgba(var(--text-color-rgb), 0.15);
+}
+
+.wallet-value-private {
+  border-color: rgba(239, 68, 68, 0.7);
+}
+
+/****** Copy Buttons ******/
+
+.wallet-copy-btn {
+  font-size: 0.75rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  background-color: rgba(var(--text-color-rgb), 0.85);
+  color: var(--bg-surface);
+  white-space: nowrap;
+}
+
+.wallet-copy-btn:hover {
+  background-color: rgba(var(--text-color-rgb), 1);
+}
+
+.wallet-copy-btn-danger {
+  background-color: #b91c1c;
+}
+
+.wallet-copy-btn-danger:hover {
+  background-color: #dc2626;
+}
+
+/****** Responsive Tweaks ******/
+
+/* Tablet */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .signup-page {
+    padding: 2rem 2.5rem 5rem;
+  }
+
+  .signup-card {
+    max-width: 520px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .signup-page {
+    padding: 1.5rem 1rem 5.5rem; /* chừa thêm chỗ cho bottom menu */
+    align-items: flex-start;
+  }
+
+  .signup-card {
+    padding: 1.4rem 1.25rem 1.75rem;
+    border-radius: 14px;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
+  }
+
+  .signup-title {
+    font-size: 1.4rem;
+  }
+
+  .wallet-row {
+    grid-template-columns: 80px 1fr;
+  }
+
+  .wallet-copy-btn,
+  .wallet-copy-btn-danger {
+    margin-top: 0.3rem;
+    grid-column: 2 / 3;
+    justify-self: flex-start;
+  }
+}
